@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
@@ -75,6 +76,10 @@ const Home = ({
   } = contextValue;
 
   const stopConversationRef = useRef<boolean>(false);
+
+  const { data: session, status } = useSession();
+  console.log('session', session, status);
+  // if (status === 'loading') return <h1> loading... please wait</h1>;
 
   const { data, error, refetch } = useQuery(
     ['GetModels', apiKey, serverSideApiKeyIsSet],
@@ -346,6 +351,26 @@ const Home = ({
     serverSideApiKeyIsSet,
     serverSidePluginKeysSet,
   ]);
+
+  function Loading() {
+    return <div>loading</div>
+  }
+  if (status === 'loading') {
+    return <Loading />;
+  }
+
+  function Login() {
+    return (
+      <div className={``}>
+        <button onClick={() => signIn('google')}>Sign in with Google</button>
+      </div>
+    )
+  }
+
+  if (status === 'unauthenticated') {
+    // signOut()
+    return <Login />;
+  }
 
   return (
     <HomeContext.Provider

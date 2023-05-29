@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react'
+import {useContext, useEffect} from 'react'
 import {useTranslation} from 'react-i18next'
 import {signOut} from 'next-auth/react'
 import {useCreateReducer} from '@/hooks/useCreateReducer'
@@ -11,7 +11,7 @@ import {Prompt} from '@/types/prompt'
 import HomeContext from '@/pages/api/home/home.context'
 
 import {PromptFolders} from './components/PromptFolders'
-import {PromptbarSettings} from './components/PromptbarSettings'
+// import {PromptbarSettings} from './components/PromptbarSettings'
 import {Prompts} from './components/Prompts'
 
 import Sidebar from '../Sidebar'
@@ -157,11 +157,7 @@ const Promptbar = () => {
         }}
       >
         <button
-          onClick={() => {
-            signOut().then(() => {
-              window.location.href = 'https://accounts.google.com/Logout'
-            })
-          }}
+          onClick={() => signOut()}
           className="flex items-center justify-end gap-2 w-full h-full text-sm font-medium text-gray-400 transition duration-300 ease-in-out border border-transparent group hover:text-white"
         >
           Sign out

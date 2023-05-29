@@ -13,7 +13,7 @@ function App({Component, pageProps}: AppProps<{}>) {
   const queryClient = new QueryClient()
 
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider session={undefined}>
       <div className={inter.className}>
         <Toaster/>
         <QueryClientProvider client={queryClient}>

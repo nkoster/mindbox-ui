@@ -1,8 +1,6 @@
 import {useContext, useEffect} from 'react'
 import {useTranslation} from 'react-i18next'
-import {signOut} from 'next-auth/react'
 import {useCreateReducer} from '@/hooks/useCreateReducer'
-import {IconLogout} from '@tabler/icons-react'
 import {savePrompts} from '@/utils/app/prompts'
 
 import {OpenAIModels} from '@/types/openai'
@@ -145,25 +143,6 @@ const Promptbar = () => {
         handleCreateFolder={() => handleCreateFolder(t('New folder'), 'prompt')}
         handleDrop={handleDrop}
       />
-      <div
-        style={{
-          position: 'fixed',
-          bottom: 14,
-          right: 10,
-          width: '110px',
-          height: '10px',
-          zIndex: 1000,
-          textAlign: 'right',
-        }}
-      >
-        <button
-          onClick={() => signOut()}
-          className="flex items-center justify-end gap-2 w-full h-full text-sm font-medium text-gray-400 transition duration-300 ease-in-out border border-transparent group hover:text-white"
-        >
-          Sign out
-          <IconLogout size={18}/>
-        </button>
-      </div>
     </PromptbarContext.Provider>
   )
 }

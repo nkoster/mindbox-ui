@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
@@ -78,8 +78,6 @@ const Home = ({
   const stopConversationRef = useRef<boolean>(false);
 
   const { data: session, status } = useSession();
-  console.log('session', session, status);
-  // if (status === 'loading') return <h1> loading... please wait</h1>;
 
   const { data, error, refetch } = useQuery(
     ['GetModels', apiKey, serverSideApiKeyIsSet],
@@ -361,8 +359,15 @@ const Home = ({
 
   function Login() {
     return (
-      <div className={``}>
-        <button onClick={() => signIn('google')}>Sign in with Google</button>
+      <div className={`mt-64 flex justify-center items-center flex-col gap-4`}>
+        <button
+          className={`w-full transitionduration-300 ease-in-out bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded`}
+          onClick={() => signIn('google')}
+        >Sign in with Google</button>
+        <button
+          className={`w-full transition duration-300 ease-in-out bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded`}
+          onClick={() => window.location.href = 'https://accounts.google.com/Logout'}
+        >Switch Google account</button>
       </div>
     )
   }
@@ -385,8 +390,8 @@ const Home = ({
       }}
     >
       <Head>
-        <title>Chatbot UI</title>
-        <meta name="description" content="ChatGPT but better." />
+        <title>MindBox</title>
+        <meta name="description" content="MindBox ChatGPT UI" />
         <meta
           name="viewport"
           content="height=device-height ,width=device-width, initial-scale=1, user-scalable=no"

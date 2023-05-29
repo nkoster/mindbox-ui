@@ -8,11 +8,11 @@ import HomeContext from '@/pages/api/home/home.context'
 import {SettingDialog} from '@/components/Settings/SettingDialog'
 
 import {Import} from '../../Settings/Import'
-import {Key} from '../../Settings/Key'
+// import {Key} from '../../Settings/Key'
 import {SidebarButton} from '../../Sidebar/SidebarButton'
 import ChatbarContext from '../Chatbar.context'
 import {ClearConversations} from './ClearConversations'
-import {PluginKeys} from './PluginKeys'
+// import {PluginKeys} from './PluginKeys'
 import {signOut} from 'next-auth/react'
 
 export const ChatbarSettings = () => {
@@ -21,10 +21,10 @@ export const ChatbarSettings = () => {
 
   const {
     state: {
-      apiKey,
-      lightMode,
-      serverSideApiKeyIsSet,
-      serverSidePluginKeysSet,
+      // apiKey,
+      // lightMode,
+      // serverSideApiKeyIsSet,
+      // serverSidePluginKeysSet,
       conversations,
     },
     dispatch: homeDispatch,
@@ -34,7 +34,7 @@ export const ChatbarSettings = () => {
     handleClearConversations,
     handleImportConversations,
     handleExportData,
-    handleApiKeyChange,
+    // handleApiKeyChange,
   } = useContext(ChatbarContext)
 
   return (
@@ -57,11 +57,11 @@ export const ChatbarSettings = () => {
         onClick={() => setIsSettingDialog(true)}
       />
 
-      {!serverSideApiKeyIsSet ? (
-        <Key apiKey={apiKey} onApiKeyChange={handleApiKeyChange}/>
-      ) : null}
+      {/*{!serverSideApiKeyIsSet ? (*/}
+      {/*  <Key apiKey={apiKey} onApiKeyChange={handleApiKeyChange}/>*/}
+      {/*) : null}*/}
 
-      {!serverSidePluginKeysSet ? <PluginKeys/> : null}
+      {/*{!serverSidePluginKeysSet ? <PluginKeys/> : null}*/}
 
       <SettingDialog
         open={isSettingDialogOpen}

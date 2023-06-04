@@ -119,7 +119,37 @@ export const Chat = memo(({stopConversationRef}: Props) => {
               ?.requiredKeys.find((key) => key.key === 'GOOGLE_CSE_ID')?.value,
           })
         }
+
+        // Incase the user is trying to send an image
+        // we take a different path. We'll use the image API
+        // and use the prompt as a description, and put the image
+        // in the message content.
+        const hasImageCommand = message.content.match(/^\/image: (.*)/)
+
+        // const imageDescription = message.content.match(/^\/image: (.*)/)
+        if (hasImageCommand) {
+          console.log('########## image command found!')
+          homeDispatch({field: 'loading', value: false})
+          homeDispatch({field: 'messageIsStreaming', value: false})
+
+          const updatedMessages: Message[] = [
+            ...updatedConversation.messages,
+            {role: 'assistant', content: 'IMAGE **COMMAND** FOUND: ' + hasImageCommand[1]},
+          ]
+          updatedConversation = {
+            ...updatedConversation,
+            messages: updatedMessages,
+          }
+          homeDispatch({
+            field: 'selectedConversation',
+            value: updatedConversation,
+          })
+          saveConversation(updatedConversation)
+          return
+        }
+
         const controller = new AbortController()
+
         const response = await fetch(endpoint, {
           method: 'POST',
           headers: {
@@ -471,21 +501,24 @@ export const Chat = memo(({stopConversationRef}: Props) => {
                   </div>
                 )}
 
-                {selectedConversation?.messages.map((message, index) => (
-                  <MemoizedChatMessage
-                    key={index}
-                    message={message}
-                    messageIndex={index}
-                    onEdit={(editedMessage) => {
-                      setCurrentMessage(editedMessage)
-                      // discard edited message and the ones that come after then resend
-                      handleSend(
-                        editedMessage,
-                        selectedConversation?.messages.length - index,
-                      )
-                    }}
-                  />
-                ))}
+                {selectedConversation?.messages.map((message, index) => {
+                  // const hasImageCommand = message.content.match(/^\/image: (.*)/)
+                  return (
+                    <MemoizedChatMessage
+                      key={index}
+                      message={message}
+                      messageIndex={index}
+                      onEdit={(editedMessage) => {
+                        setCurrentMessage(editedMessage)
+                        // discard edited message and the ones that come after then resend
+                        handleSend(
+                          editedMessage,
+                          selectedConversation?.messages.length - index,
+                        )
+                      }}
+                    />
+                  )
+                })}
 
                 {loading && <ChatLoader/>}
 

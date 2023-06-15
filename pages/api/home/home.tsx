@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
-import { useSession, signIn } from 'next-auth/react';
+import {useSession, signIn, getSession} from 'next-auth/react'
 
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
@@ -41,6 +41,8 @@ import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
 
 import { v4 as uuidv4 } from 'uuid';
+import path from 'path'
+import * as fs from 'fs'
 
 interface Props {
   serverSideApiKeyIsSet: boolean;
@@ -425,7 +427,24 @@ const Home = ({
 };
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+
+  const {locale} = context;
+  const session = await getSession(context);
+
+  const filePath = path.join(process.cwd(), 'allowedUsers.json');
+  const fileContent = fs.readFileSync(filePath, 'utf8');
+  const allowedUsers = JSON.parse(fileContent);
+
+  if (!session || !session.user || !allowedUsers.includes(session.user.email as string)) {
+    return {
+      redirect: {
+        destination: '/signup',
+        permanent: false,
+      },
+    };
+  }
+
   const defaultModelId =
     (process.env.DEFAULT_MODEL &&
       Object.values(OpenAIModelID).includes(

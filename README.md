@@ -4,6 +4,20 @@ Chatbot UI is an open source chat UI for AI models.
 
 See a [demo](https://twitter.com/mckaywrigley/status/1640380021423603713?s=46&t=AowqkodyK6B4JccSOxSPew).
 
+## NOTE: This is a fork!
+
+Please visit https://github.com/mckaywrigley/chatbot-ui for the original project.
+The original project seems not maintained anymore. This fork is maintained by me.
+I am keeping an eye on the original project and if there are
+any interesting or necessary pull requests, I will merge them here.
+
+### What's different here?
+
+- Added Google authentication
+- Added personalization, based on the Google session
+- Added allowedUsers.json as simple user management
+- Removed Google search plugin stuff
+
 ![Chatbot UI](./public/screenshots/screenshot-0402023.jpg)
 
 ## Updates

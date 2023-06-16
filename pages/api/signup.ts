@@ -16,10 +16,6 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
 
-    console.log('>>>>', req.body)
-
-    // const formData: FormData = JSON.parse(req.body)
-
     const formData: FormData = req.body
 
     try {

@@ -28,11 +28,16 @@ const SignupForm = () => {
     })
 
     if (response.status === 200) {
-      toast.success('Succes')
+      toast.success('Signup successfully! You will be redirected to the homepage')
       setFormData({name: '', email: '', phone: ''})
     } else {
-      toast.error('Email bestaat al')
+      toast.error('Something went wrong')
     }
+
+    setTimeout(() => {
+      window.location.href = '/'
+    }, 2000)
+
   }
 
   return (

@@ -367,6 +367,10 @@ const Home = ({
           onClick={() => signIn('google')}
         >Sign in with Google</button>
         <button
+          className={`w-full transitionduration-300 ease-in-out bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded`}
+          onClick={() => window.location.href = '/signup'}
+        >Request Access</button>
+        <button
           className={`w-full transition duration-300 ease-in-out bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded`}
           onClick={() => window.location.href = 'https://accounts.google.com/Logout'}
         >Switch Google account</button>
@@ -436,6 +440,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const allowedUsers = JSON.parse(fileContent);
 
+  // When a user is authenticated, redirect to the signup page
+  // if they are not in the allowedUsers list
   if (session && session.user && !allowedUsers.includes(session.user.email as string)) {
     return {
       redirect: {

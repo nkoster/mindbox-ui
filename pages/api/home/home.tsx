@@ -436,7 +436,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const allowedUsers = JSON.parse(fileContent);
 
-  if (!session || !session.user || !allowedUsers.includes(session.user.email as string)) {
+  if (session && session.user && !allowedUsers.includes(session.user.email as string)) {
     return {
       redirect: {
         destination: '/signup',

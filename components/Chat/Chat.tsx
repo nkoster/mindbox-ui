@@ -98,6 +98,7 @@ export const Chat = memo(({stopConversationRef}: Props) => {
         homeDispatch({field: 'loading', value: true})
         homeDispatch({field: 'messageIsStreaming', value: true})
         const prompt = updatedConversation.prompt +
+          `\nCurrent time: ${new Date().toString()}.` +
           `\nThe full name of the user is ${session?.user?.name || 'unknown'}.` +
           '\nIf you know the user\'s name, you may call him by his first name.'
         const chatBody: ChatBody = {

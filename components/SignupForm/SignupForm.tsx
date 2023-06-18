@@ -81,7 +81,7 @@ const SignupForm = () => {
           required
           className="bg-green-500 text-black placeholder-white w-full p-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300"
         />
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-col lg:flex-row justify-between">
           <div className="opacity-70">
             <ReCAPTCHA sitekey="6LdXt6YmAAAAAIbUUQdkvMnZ9fw82kZfmUurVTA3" onChange={handleCaptchaChange}/>
           </div>

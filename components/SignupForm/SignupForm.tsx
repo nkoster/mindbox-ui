@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import toast from 'react-hot-toast'
 
 type FormData = {
@@ -13,6 +14,14 @@ const SignupForm = () => {
     email: '',
     phone: '',
   })
+
+  const [captchaValue, setCaptchaValue] = useState<string | null>(null)
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true)
+
+  const handleCaptchaChange = (value: string | null) => {
+    setCaptchaValue(value)
+    setSubmitButtonDisabled(!value)
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value})
@@ -39,6 +48,8 @@ const SignupForm = () => {
     }, 2000)
 
   }
+
+  // 6Ldco6YmAAAAAN7QM6q3XpaTJiFsT-vzz4mtZYXv
 
   return (
     <div>
@@ -70,13 +81,18 @@ const SignupForm = () => {
           required
           className="bg-green-500 text-black placeholder-white w-full p-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300"
         />
-        <button
-          type="submit"
-          disabled={formData.name.length < 3 || formData.email.length < 3 || formData.phone.length < 7}
-          className="bg-green-400 text-black px-6 py-2 rounded-md hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-300 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Submit
-        </button>
+        <div className="flex flex-row justify-between">
+          <div className="opacity-70">
+            <ReCAPTCHA sitekey="6LdXt6YmAAAAAIbUUQdkvMnZ9fw82kZfmUurVTA3" onChange={handleCaptchaChange}/>
+          </div>
+          <button
+            type="submit"
+            disabled={formData.name.length < 3 || formData.email.length < 3 || formData.phone.length < 7 || !captchaValue || submitButtonDisabled}
+            className="bg-green-400 text-black mt-3 px-6 py-2 rounded-md hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   )

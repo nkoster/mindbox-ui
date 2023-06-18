@@ -23,16 +23,16 @@ export default async function handler(
       const signupRequestList = JSON.parse(rawData)
 
       if (signupRequestList.some((user: FormData) => user.email === formData.email)) {
-        res.status(409).json({message: 'Email bestaat al'})
+        res.status(409).json({message: 'Exists'})
       } else {
         signupRequestList.push(formData)
         fs.writeFileSync(signupRequestListPath, JSON.stringify(signupRequestList))
-        res.status(200).json({message: 'Succes'})
+        res.status(200).json({message: 'Success'})
       }
     } catch (error) {
-      res.status(500).json({message: 'Er is een fout opgetreden'})
+      res.status(500).json({message: 'Internal server error'})
     }
   } else {
-    res.status(405).json({message: 'Methode niet toegestaan'})
+    res.status(405).json({message: 'Method not allowed'})
   }
 }

@@ -127,6 +127,7 @@ export const ConversationComponent = ({ conversation }: Props) => {
           disabled={messageIsStreaming}
           draggable="true"
           onDragStart={(e) => handleDragStart(e, conversation)}
+          title={conversation.name}
         >
           <IconMessage size={18} />
           <div

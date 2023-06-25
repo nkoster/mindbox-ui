@@ -177,8 +177,8 @@ export const Chat = memo(({stopConversationRef}: Props) => {
         if (!plugin) {
           if (updatedConversation.messages.length === 1) {
             const {content} = message
-            const customName =
-              content.length > 30 ? content.substring(0, 30) + '...' : content
+            const customName = content.toString()
+              // content.length > 30 ? content.substring(0, 30) + '...' : content
             updatedConversation = {
               ...updatedConversation,
               name: customName,
